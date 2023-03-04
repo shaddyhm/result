@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "result helper",
   "main": "dist/result.js",
+  "types": "dist/result.d.ts",
   "scripts": {
     "build": "tsc --build",
     "test": "mocha"
