@@ -1,6 +1,6 @@
 {
   "name": "@shaddyhm/result",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "result helper",
   "main": "dist/result.js",
   "types": "dist/result.d.ts",
