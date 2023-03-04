@@ -17,4 +17,5 @@ jobs:
       - run: npm run build
       - run: npm publish --access public
         env:
+          NPM_CONFIG_USERCONFIG: .cd.npmrc
           NODE_AUTH_TOKEN: ${{ secrets.NPM_RESULT_TOKEN }}
