@@ -23,6 +23,13 @@ export class Result<T> {
     return Result.ok(v);
   }
 
+  public getOrThrow(): T {
+    if (!this.isSuccess) {
+      throw this.error;
+    }
+    return this.value;
+  }
+
   public map<U>(fn: (v: T) => U): Result<U> {
     if (!this.isSuccess) {
       return this.exception(this.error);
