@@ -19,7 +19,7 @@ describe("Test Result", () => {
   const age = 34;
 
   it("ensure: should fail skipping subsequent onsuccess calls", () => {
-    const newLastName = 'Man Sour';
+    const newLastName = "Man Sour";
     const msg = "not a good look ma!";
     const result: Result<Person> = Result.from(new Person())
       .onSuccess((x) => (x.firstName = firstName))
@@ -33,41 +33,65 @@ describe("Test Result", () => {
     assert.equal(msg, result.error.message);
   });
 
-  it('map: should map from an object to another', () => {
+  describe("getorthrow tests", () => {
+    it("getorthrow: should get the value", () => {
+      const person: Person = Result.from(new Person())
+        .onSuccess((x) => (x.firstName = firstName))
+        .onSuccess((x) => (x.lastName = lastName))
+        .onSuccess((x) => (x.age = age))
+        .getOrThrow();
+      assert.equal(firstName, person.firstName);
+      assert.equal(lastName, person.lastName);
+      assert.equal(age, person.age);
+    });
+
+    it("getorthrow: should throw the error", () => {
+      assert.throws(() =>
+        Result.from(new Person())
+          .onSuccess((x) => (x.firstName = firstName))
+          .onSuccess((x) => (x.lastName = lastName))
+          .onSuccess((x) => (x.age = age))
+          .ensure((x) => x.age <= 21, "too old!")
+          .getOrThrow()
+      );
+    });
+  });
+
+  it("map: should map from an object to another", () => {
     const result: Result<AnotherPerson> = Result.from(new Person())
       .onSuccess((x) => {
         x.firstName = firstName;
         x.lastName = lastName;
         x.age = age;
       })
-      .map(x => {
+      .map((x) => {
         const anotherPerson = new AnotherPerson();
         anotherPerson.anotherFirstName = x.firstName;
         anotherPerson.anotherLastName = x.lastName;
         anotherPerson.anotherAge = x.age;
         return anotherPerson;
       });
-      assert.equal(firstName, result.value.anotherFirstName);
-      assert.equal(lastName, result.value.anotherLastName);
-      assert.equal(age, result.value.anotherAge);
+    assert.equal(firstName, result.value.anotherFirstName);
+    assert.equal(lastName, result.value.anotherLastName);
+    assert.equal(age, result.value.anotherAge);
   });
 
-  it('onfailure: should call onfailure when ensure pred return false', () => {
-    const newLastName = 'Man Sour';
+  it("onfailure: should call onfailure when ensure pred return false", () => {
+    const newLastName = "Man Sour";
     const msg = "not a good look ma!";
-    const newMsg = 'changed error msg!!!';
+    const newMsg = "changed error msg!!!";
     const result: Result<Person> = Result.from(new Person())
       .onSuccess((x) => (x.firstName = firstName))
       .onSuccess((x) => (x.lastName = newLastName))
       .ensure((x) => x.lastName == lastName, msg)
       .onSuccess((x) => (x.age = age))
-      .onFailure(e => e.message = newMsg);
-      assert.equal(firstName, result.value.firstName);
-      assert.equal(newLastName, result.value.lastName);
-      assert.equal(newMsg, result.error.message);
-      assert.notEqual(lastName, result.value.lastName);
-      assert.notEqual(age, result.value.age);
-      assert.notEqual(msg, result.error.message);
+      .onFailure((e) => (e.message = newMsg));
+    assert.equal(firstName, result.value.firstName);
+    assert.equal(newLastName, result.value.lastName);
+    assert.equal(newMsg, result.error.message);
+    assert.notEqual(lastName, result.value.lastName);
+    assert.notEqual(age, result.value.age);
+    assert.notEqual(msg, result.error.message);
   });
 
   it("onsuccess: should call onsuccess all the way down", () => {
