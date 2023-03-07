@@ -1,6 +1,6 @@
 # Result
 Result is inspired by the [Result](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/) class from Kotlin.
-Result is a helper for making things look readable and tidy.
+Result is a helper for making code look readable and tidy.
 
 ## Installation
 Using npm:

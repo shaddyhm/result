@@ -7,7 +7,7 @@
   "stopOnEntry": false,
   "args": [
     "-r",
-    "ts-node/register",
+    "ts-node",
     "${workspaceRoot}/test/**/*.spec.ts",
     "--no-timeouts"
   ],
