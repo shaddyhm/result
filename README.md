@@ -9,4 +9,4 @@ npm i @shaddyhm/result
 ```
 
 ## Contribution
-Feel free to fork and add your touch, but this version is for personal use.
+Feel free to fork and add your touch, but this version is for personal use. 
